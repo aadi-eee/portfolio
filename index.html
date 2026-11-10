@@ -33,6 +33,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hs{font:500 clamp(58px,15vw,120px)/.9 'Apple Garamond','EB Garamond',Garamond,serif;letter-spacing:-.045em}
 .hb{font:400 clamp(50px,13vw,104px)/1.05 'Mystery Quest','Apple Garamond',cursive;letter-spacing:0}
 .hero h1 .hb{margin-top:.12em}
+.hero-heart{margin-left:.08em;color:var(--pink2);font-size:.72em;vertical-align:.12em}
 .hero .typing::after{content:"";display:inline-block;height:.8em;margin-left:.08em;border-right:.07em solid currentColor;vertical-align:-.04em;animation:typewriterCaret .8s step-end infinite}
 @keyframes typewriterCaret{50%{opacity:0}}
 .hero p{margin:0 0 16px;padding:5px 10px;border-radius:3px;background:var(--pink);font:500 11px 'Fraunces',Georgia,serif;letter-spacing:.05em;text-transform:uppercase;transform:rotate(-2.5deg)}
@@ -296,7 +297,7 @@ dialog[open]{animation:pop .25s ease-out}
   <i class="star" style="right:-18px;top:30px;--s:110px"></i>
   <i class="star" style="left:-30px;top:330px;--s:130px;--c:var(--blue)"></i>
   <i class="star" style="right:-26px;bottom:60px;--s:120px"></i>
-  <h1><span class="hs">a tiny room by</span><span class="hb nm">Aaditi</span></h1>
+  <h1><span class="hs">a tiny room by</span><span class="hb"><span class="nm">Aaditi</span><span class="hero-heart" aria-hidden="true">♡</span></span></h1>
   <p id="tag">for my work, photos &amp; keepsakes</p>
 
   <div class="stage">
