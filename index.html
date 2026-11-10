@@ -50,8 +50,8 @@ clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,
 @keyframes cameraShake{0%,100%{rotate:0deg}25%{rotate:-2deg}75%{rotate:2deg}}
 @media (prefers-reduced-motion:reduce){.hero.intro .camera{animation:none}}
 .hero.intro .strip{transform:translateY(-104%)}
-.hero>h1,.hero>p,.hero>.go,.tag,.again{transition:opacity .8s ease .9s}
-.hero.intro>h1,.hero.intro>p,.hero.intro>.go,.hero.intro .tag,.hero.intro .again{opacity:0;visibility:hidden}
+.hero>h1,.hero>p,.hero>.hero-actions,.tag,.again{transition:opacity .8s ease .9s}
+.hero.intro>h1,.hero.intro>p,.hero.intro>.hero-actions,.hero.intro .tag,.hero.intro .again{opacity:0;visibility:hidden}
 .hint{position:absolute;left:0;right:0;top:-125px;width:max-content;margin:0 auto;z-index:5;display:table;white-space:nowrap;padding:8px 15px;border:2px solid #b9628d;border-radius:12px;background:linear-gradient(135deg,#fff1a8,#ffd3e5);box-shadow:0 4px 0 #b9628d,0 8px 16px #4a323655;color:#4a2638;font:700 14px 'Fraunces',Georgia,serif;letter-spacing:.04em;text-transform:uppercase;animation:pulse 1.6s ease-in-out infinite;transition:opacity .4s}
 .hero:not(.intro) .hint{opacity:0;pointer-events:none;animation:none}
 @keyframes pulse{50%{transform:scale(1.07)}}
@@ -70,7 +70,7 @@ clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,
 .hero:not(.intro)>.stage{grid-column:1;grid-row:1/-1;align-self:center}
 .hero:not(.intro)>h1{grid-column:2;grid-row:2;align-items:flex-start}
 .hero:not(.intro)>p{grid-column:2;grid-row:3;justify-self:start}
-.hero:not(.intro)>.go{grid-column:2;grid-row:4;justify-self:start;margin-top:22px}
+.hero:not(.intro)>.hero-actions{grid-column:2;grid-row:4;justify-self:start;margin-top:22px}
 .hs{font-size:clamp(72px,7.4vw,120px)}
 .hb{font-size:clamp(62px,6.6vw,104px)}
 }
@@ -98,6 +98,10 @@ background:radial-gradient(circle at 40% 35%,#f6f7f9 0 17%,#b8bec7 18% 23%,#eef0
 .again{position:absolute;z-index:5;right:34px;bottom:34px;width:46px;height:46px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,#f9c9de,#ee9cc2);box-shadow:0 3px 6px #0003}
 .again::before{content:"";position:absolute;left:14px;top:14px;width:6px;height:6px;border-radius:50%;background:#c9628f;box-shadow:12px 0 #c9628f,0 12px #c9628f,12px 12px #c9628f}
 .go{margin-top:12px;padding:12px 22px;border:0;border-radius:99px;background:var(--pink2);color:#3b1f2b;font-weight:600;position:relative;z-index:2}
+.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:12px;position:relative;z-index:2}
+.hero-actions .go{margin-top:0}
+.github-link{background:var(--blue);color:var(--ink)}
+@media(max-width:420px){.hero-actions{flex-direction:column;align-items:center}}
 
 /* room */
 #room{max-width:1100px;margin:0 auto;padding:40px 16px 80px;text-align:center}
@@ -308,7 +312,10 @@ dialog[open]{animation:pop .25s ease-out}
     <span class="tag t1">you're</span><span class="tag t2">so cute</span><span class="tag t3">(๑•ᴗ•๑)</span>
     <button class="again" id="again" aria-label="Print the photos again"></button>
   </div>
-  <a class="go" href="#room" style="text-decoration:none">Come into my room ↓</a>
+  <div class="hero-actions">
+    <a class="go" href="#room" style="text-decoration:none">Come into my room ↓</a>
+    <a class="go github-link" href="https://github.com/aadi-eee" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Open GitHub ↗</a>
+  </div>
 </header>
 
 <section id="room">
