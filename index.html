@@ -151,23 +151,6 @@ dialog[open]{animation:pop .25s ease-out}
 @media(max-width:700px){#skills{padding:20px 16px 75px}.skills-sheet{max-width:520px;margin:auto;padding:34px 18px 24px}}
 /* projects page */
 #projects{max-width:1100px;margin:0 auto;padding:30px 22px 100px;scroll-margin-top:78px}
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
-.proj-card{position:relative;display:flex;flex-direction:column;padding:20px 20px 22px;border:1.5px solid var(--ink);border-radius:24px;background:var(--card);box-shadow:7px 8px 0 color-mix(in srgb,var(--pink2) 55%,transparent);transition:transform .2s ease,box-shadow .2s ease}
-.proj-card:nth-child(3n+2){box-shadow:7px 8px 0 color-mix(in srgb,var(--blue) 90%,transparent)}
-.proj-card:hover{transform:translateY(-5px) rotate(-.4deg)}
-.proj-card.soon{border-style:dashed}
-.proj-tag{align-self:flex-start;margin-bottom:14px;padding:5px 12px;border:1px solid var(--ink);border-radius:99px;background:var(--pink);font:500 10px 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
-.proj-card:nth-child(3n+2) .proj-tag{background:var(--blue)}
-.proj-card h3{margin:0 0 8px;font:600 30px/1.05 'Apple Garamond','EB Garamond',Garamond,serif;letter-spacing:-.035em}
-.proj-card p{margin:0 0 14px;font-size:15px}
-.proj-tech{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px;padding:0;list-style:none}
-.proj-tech li{padding:4px 10px;border-radius:99px;background:var(--blue);font:500 12px 'Fraunces',Georgia,serif}
-.proj-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
-.proj-links a,.proj-links span{padding:9px 15px;border:1.5px solid var(--ink);border-radius:99px;background:var(--pink2);color:#3b1f2b;font:600 13px 'Fraunces',Georgia,serif;text-decoration:none;transition:transform .15s ease}
-.proj-links a:hover{transform:translateY(-2px)}
-.proj-links .alt{background:var(--card);color:var(--ink)}
-.proj-links span{background:transparent;color:var(--ink);border-style:dashed;opacity:.75}
-#projects .about-bottom{margin-top:48px}
 @media(max-width:700px){#projects{padding:20px 16px 75px}}
 /* contact page */
 #contact{max-width:1100px;margin:0 auto;padding:30px 22px 100px;scroll-margin-top:78px}
@@ -355,16 +338,12 @@ dialog[open]{animation:pop .25s ease-out}
   </div>
   <div class="skills-sheet">
     <span class="skills-sticker">always learning!</span>
-    <div id="react-skills"></div>
+    <div class="chips"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Git &amp; GitHub</span></div>
   </div>
 </section>
 
-<section id="projects" aria-labelledby="projects-heading">
-  <div class="about-head">
-    <span class="about-kicker">things I’ve made &amp; am making</span>
-    <h2 class="about-title" id="projects-heading">My <em>projects</em></h2>
-  </div>
-  <div class="proj-grid" id="proj-grid"></div>
+<section id="projects" aria-label="Projects">
+  <div id="react-projects"></div>
 </section>
 
 <section id="contact" aria-labelledby="contact-heading">
@@ -412,19 +391,6 @@ const ME={
   interests:["Web development","Problem solving","Algorithms","Open source","Music","Travelling"],
   skills:["HTML","CSS","JavaScript","React","Git & GitHub"],
   tools:["VS Code","Git","GitHub","Terminal","IntelliJ"],
-  projects:[
-    {t:"Web Programming assignments",tag:"Course work",
-      d:"Every assignment from my web programming course, week by week, from first HTML pages to styled and published sites.",
-      tech:["HTML","CSS","JavaScript","GitHub Pages"],
-      links:[{label:"See on GitHub",url:"https://github.com/aadi-eee/webprogramming"},{label:"Live site",url:"https://aadi-eee.github.io/webprogramming/",alt:true}]},
-    {t:"Photobooth site",tag:"Coming soon",soon:true,
-      d:"A little website that works like a photobooth. I’m planning and building this one next.",
-      tech:["HTML","CSS","JavaScript"],
-      links:[]},
-    {t:"RecipePlan",tag:"Group project",
-      d:"A recipe finder and weekly meal planner built with a team of four for our course. Search recipes, plan your week, and flag allergens.",
-      tech:["HTML","Tailwind CSS","JavaScript","Firebase","TheMealDB"],
-      links:[{label:"Live site",url:"https://kahlen2008.github.io/webprogproject/"}]}],
   email:"aaditi5000@gmail.com",
   hello:"I’m open to projects, collabs and new friends.",
   links:[["Instagram","https://www.instagram.com/dittoditi/"],["Resume","Aaditi_Resume.pdf"]]
@@ -569,8 +535,6 @@ if('IntersectionObserver' in window){
   },{threshold:.2});
   profileObserver.observe(aboutProfile);
 }else aboutProfile.classList.add('is-revealing');
-// Projects page: build the cards from ME.projects
-$('#proj-grid').innerHTML=ME.projects.map(p=>`<article class="proj-card${p.soon?' soon':''}"><span class="proj-tag">${p.tag}</span><h3>${p.t}</h3><p>${p.d}</p><ul class="proj-tech">${p.tech.map(x=>`<li>${x}</li>`).join('')}</ul><div class="proj-links">${p.links.length?p.links.map(l=>`<a class="${l.alt?'alt':''}" href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join(''):`<span>${p.soon?'Link coming soon':'Link to be added'}</span>`}</div></article>`).join('');
 document.querySelectorAll('#skills .about-head,#projects .about-head').forEach(head=>{
   if(!('IntersectionObserver' in window))return;
   new IntersectionObserver(entries=>entries.forEach(en=>{
@@ -654,20 +618,72 @@ document.querySelectorAll('.shot input').forEach(i=>i.onchange=e=>{
 <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
 
 <script type="text/babel">
-  function Skills() {
-    const skills = ["HTML", "CSS", "JavaScript", "React", "Git & GitHub"];
+  const { useState } = React;
+
+  const projects = [
+    { id: 1, title: "Portfolio gallery", description: "ProjectCard, ProjectList and a FilterBar that filters by tech with useState.", tech: ["React", "CSS"], github: "https://github.com/aadi-eee/week11", demo: "https://week11-rho.vercel.app/" },
+    { id: 2, title: "Student directory", description: "A StudentProfileCard with five props, used for three students.", tech: ["React", "CSS"], github: "https://github.com/aadi-eee/week11-hw2", demo: "https://aadi-eee.github.io/week11-hw2/" },
+    { id: 3, title: "Course catalog", description: "CourseCard components with a required badge, rendered from an array.", tech: ["React", "CSS"], github: "https://github.com/aadi-eee/course-catalog", demo: "https://aadi-eee.github.io/course-catalog/" },
+    { id: 4, title: "Class practice", description: "Eight React exercises on components, props and rendering.", tech: ["React", "JavaScript"], github: "https://github.com/aadi-eee/class-practice", demo: "https://aadi-eee.github.io/class-practice/week11hmwrk.html" },
+  ];
+
+  const cardStyle = { background: "#fff", border: "2px solid #2a1b1b", borderRadius: 14, padding: 24, boxShadow: "6px 6px 0 #f4a6c4" };
+  const tagStyle = { padding: "2px 10px", borderRadius: 999, background: "#fbeaa0", border: "1px solid #2a1b1b", fontSize: 14 };
+  const linkStyle = { padding: "6px 14px", border: "2px solid #6b0f1a", borderRadius: 999, color: "#6b0f1a", textDecoration: "none" };
+  const pillStyle = { padding: "8px 18px", border: "2px solid #2a1b1b", borderRadius: 999, background: "#fff", color: "#2a1b1b", cursor: "pointer", font: "inherit" };
+  const pillActive = { background: "#6b0f1a", borderColor: "#6b0f1a", color: "#fff" };
+
+  function ProjectCard({ title, description, tech, github, demo }) {
     return (
-      <ul style={{ listStyle: "none", padding: 0, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px" }}>
-        {skills.map((skill) => (
-          <li key={skill} style={{ padding: "8px 18px", border: "2px solid #2a1b1b", borderRadius: "999px", background: "#f4a6c4", fontWeight: 600 }}>
-            {skill}
-          </li>
-        ))}
-      </ul>
+      <div style={cardStyle}>
+        <h3 style={{ margin: "0 0 8px", color: "#6b0f1a", fontWeight: 400, fontSize: 28 }}>{title}</h3>
+        <p style={{ margin: "0 0 12px" }}>{description}</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
+          {tech.map((t) => <span key={t} style={tagStyle}>{t}</span>)}
+        </div>
+        <div style={{ display: "flex", gap: 12 }}>
+          <a href={demo} target="_blank" rel="noreferrer" style={linkStyle}>Live site</a>
+          <a href={github} target="_blank" rel="noreferrer" style={linkStyle}>Repository</a>
+        </div>
+      </div>
     );
   }
 
-  ReactDOM.createRoot(document.getElementById("react-skills")).render(<Skills />);
+  function FilterBar({ techs, selected, onSelect }) {
+    return (
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 32 }}>
+        {techs.map((t) => {
+          const count = t === "All" ? projects.length : projects.filter((p) => p.tech.includes(t)).length;
+          return (
+            <button key={t} type="button" onClick={() => onSelect(t)}
+              style={{ ...pillStyle, ...(t === selected ? pillActive : {}) }}>
+              {t} ({count})
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  function Projects() {
+    const [filter, setFilter] = useState("All");
+    const techs = ["All", ...new Set(projects.flatMap((p) => p.tech))];
+    const visible = filter === "All" ? projects : projects.filter((p) => p.tech.includes(filter));
+
+    return (
+      <section style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 20px" }}>
+        <h2 style={{ fontWeight: 400, fontSize: 52, color: "#2a1b1b", margin: "0 0 24px" }}>
+          Featured <span style={{ color: "#6b0f1a", fontStyle: "italic" }}>projects</span>
+        </h2>
+        <FilterBar techs={techs} selected={filter} onSelect={setFilter} />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 24 }}>
+          {visible.map((p) => <ProjectCard key={p.id} {...p} />)}
+        </div>
+      </section>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("react-projects")).render(<Projects />);
 </script>
 </body>
 </html>
